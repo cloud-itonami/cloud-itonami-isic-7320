@@ -2,7 +2,7 @@
 
 ## Classification
 
-- Repository: `cloud-itonami-7320`
+- Repository: `cloud-itonami-isic-7320`
 - ISIC Rev.5: `7320`
 - Activity: market research and public opinion polling -- collecting, analyzing and reporting on data about markets, consumer preferences and public opinion
 - Social impact: professional standards, data sovereignty, transparent audit

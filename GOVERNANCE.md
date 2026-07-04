@@ -1,6 +1,6 @@
 # Governance
 
-`cloud-itonami-7320` is an OSS open-business blueprint for market research and public opinion polling -- collecting, analyzing and reporting on data about markets, consumer preferences and public opinion.
+`cloud-itonami-isic-7320` is an OSS open-business blueprint for market research and public opinion polling -- collecting, analyzing and reporting on data about markets, consumer preferences and public opinion.
 Governance covers both the capability layer and the operator model.
 
 ## Maintainers

@@ -1,4 +1,4 @@
-# cloud-itonami-7320
+# cloud-itonami-isic-7320
 
 Open Business Blueprint for **ISIC Rev.5 7320**: Market research and public opinion polling.
 

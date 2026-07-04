@@ -1,4 +1,4 @@
-{:itonami.blueprint/id "cloud-itonami-7320"
+{:itonami.blueprint/id "cloud-itonami-isic-7320"
  :itonami.blueprint/name "Market research and public opinion polling"
  :itonami.blueprint/isic-rev5 "7320"
  :itonami.blueprint/domain :professional/market-research
