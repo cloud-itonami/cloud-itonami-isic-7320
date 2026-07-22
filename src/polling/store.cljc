@@ -33,10 +33,9 @@
   approved by whom' is always a query over an immutable log -- the
   audit trail a client/public trusting a research firm needs, and the
   evidence a firm needs if a publication decision is later disputed."
-  (:require #?(:clj  [clojure.edn :as edn]
-               :cljs [cljs.reader :as edn])
-            [polling.registry :as registry]
-            [langchain.db :as d]))
+  (:require [polling.registry :as registry]
+            [langchain.db :as d]
+            [langchain-store.core :as ls]))
 
 (defprotocol Store
   (survey [s id])
@@ -154,8 +153,8 @@
    :report/seq                        {:db/unique :db.unique/identity}
    :report-sequence/jurisdiction      {:db/unique :db.unique/identity}})
 
-(defn- enc [v] (pr-str v))
-(defn- dec* [s] (when s (edn/read-string s)))
+(defn- enc [v] (ls/enc v))
+(defn- dec* [s] (ls/dec* s))
 
 (defn- survey->tx [{:keys [id client-name actual-sample-size minimum-required-sample-size
                          unrepresentative-sample-risk-unresolved?
