@@ -61,7 +61,32 @@
           :required-evidence ["Erhebungsdesignprotokoll (survey-design-record)"
                               "Stichprobenmethodikprotokoll (sampling-methodology-record)"
                               "Felderhebungsprotokoll (fieldwork-record)"
-                              "Befragteneinwilligungsprotokoll (respondent-consent-record)"]}})
+                              "Befragteneinwilligungsprotokoll (respondent-consent-record)"]}
+   "CHN" {:name "People's Republic of China"
+          :owner-authority "中国市场信息调查业协会 (Chinese Association of Market Information and Research, CAMIR) — 业务主管单位は国家统计局"
+          :legal-basis "中华人民共和国个人信息保护法 (PIPL, 2021-11-01 施行) / 《中国市场信息调查行业职业道德与行为准则》(CAMIR)"
+          :national-spec "市场信息调查业の行为规范・执业标准および回答者个人信息の告知同意・敏感个人信息の単独同意"
+          :provenance "http://www.camir.org/01/27/16.html"
+          :pipl-provenance "https://www.cac.gov.cn/2021-08/20/c_1631050028355286.htm"
+          :retrieved-at "2026-07-27"
+          :required-evidence ["调查设计记录 (survey-design-record)"
+                              "抽样方法记录 (sampling-methodology-record)"
+                              "实地调查记录 (fieldwork-record)"
+                              "受访者同意记录 (respondent-consent-record)"]
+          ;; This actor screens sampling integrity and respondent
+          ;; consent. It does NOT model China's foreign-related survey
+          ;; regime (涉外调查管理办法: the 涉外调查许可证 the conducting
+          ;; organization must hold, and the per-project approval that
+          ;; 涉外社会调查 -- but NOT 涉外市场调查 -- additionally needs).
+          ;; That is a conditional gate whose applicability depends on a
+          ;; per-survey classification, which a catalog row cannot
+          ;; express. `cloud-itonami-iso3166-chn-market-research`
+          ;; implements it. Naming the boundary here so a foreign-funded
+          ;; CHN survey is not mistaken for fully screened by this actor
+          ;; alone.
+          :out-of-scope-here [:foreign-related-survey-permit
+                              :foreign-related-social-survey-approval]
+          :out-of-scope-note "涉外调查许可证・涉外社会调查项目审批は本 actor では判定しない — cloud-itonami-iso3166-chn-market-research を参照"}})
 
 (defn spec-basis
   "The jurisdiction's requirement map, or nil -- nil means NO spec-basis,
