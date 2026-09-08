@@ -21,4 +21,15 @@ Funding page: https://app.itonami.cloud/ja/#capital=cloud-itonami%2Fcloud-itonam
 
 ## Owner direction: two separate models
 
-The owner named **Awai network** as the responsible organization; its registered legal identity and jurisdiction still need confirmation. Preserve the principal-spending business-loan draft and offer a separate `yield-budget-v1` round. Each needs its own explicit terms/version and vault. The yield round's `botShareBps` remains unset: the implementation permits an explicit split, but no particular share was authorized. Neither draft is accepting deposits. The business profile may serve both, while accounts and authority stay round-specific.
+The owner named **Awai network** as the responsible organization; its registered legal identity and jurisdiction still need confirmation. Preserve the principal-spending business-loan draft and offer a separate `yield-budget-v1` round. Each needs its own explicit terms/version and vault. The yield pilot uses the subsequently confirmed 5000 bps Bot share and 10 USDC cap; see yield-pilot-review.md. Neither draft is accepting deposits. The business profile may serve both, while accounts and authority stay round-specific.
+
+
+A prefilled, explicitly unpublished review is available at:
+https://app.itonami.cloud/ja/#capital=cloud-itonami%2Fcloud-itonami-isic-7320&launch=yield-pilot
+
+The proposed daily cap is 1 USDC, funding lasts seven days, and maturity is
+thirty days after funding closes. These are review defaults, not activated terms.
+The catalog-listed Murakumo/Hyakka payee is the same Safe supplied by the owner;
+this related-service destination is disclosed in the draft. A token transfer
+alone is not an x402 service receipt. Verify the seller's supported payment path
+before any purchase; do not fabricate service delivery.
