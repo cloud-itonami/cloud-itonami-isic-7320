@@ -30,7 +30,7 @@
   a research firm would keep, not the act of publishing the findings
   report itself (that is `polling.operation`'s `:actuation/publish-
   findings-report`, always human-gated -- see README `Actuation`)."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (defn- unsigned-certificate
   "Every certificate this actor produces is UNSIGNED -- signature is
@@ -74,7 +74,7 @@
     (throw (ex-info "findings-report: jurisdiction required" {})))
   (when (< sequence 0)
     (throw (ex-info "findings-report: sequence must be >= 0" {})))
-  (let [report-number (str (str/upper-case jurisdiction) "-RPT-" (zero-pad sequence 6))
+  (let [report-number (str (str/upper jurisdiction) "-RPT-" (zero-pad sequence 6))
         record {"record_id" report-number
                 "kind" "findings-report-draft"
                 "survey_id" survey-id
