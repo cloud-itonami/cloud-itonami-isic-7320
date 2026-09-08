@@ -18,3 +18,7 @@ The current fixed-round implementation distributes actual settlement assets pro 
 6. Customer receipts, Bot spending, DeFi allocation and lender settlement each need their own actual evidence. A successful vault deployment does not prove those operations.
 
 Funding page: https://app.itonami.cloud/ja/#capital=cloud-itonami%2Fcloud-itonami-isic-7320
+
+## Owner direction: two separate models
+
+The owner named **Awai network** as the responsible organization; its registered legal identity and jurisdiction still need confirmation. Preserve the principal-spending business-loan draft and offer a separate `yield-budget-v1` round. Each needs its own explicit terms/version and vault. The yield round's `botShareBps` remains unset: the implementation permits an explicit split, but no particular share was authorized. Neither draft is accepting deposits. The business profile may serve both, while accounts and authority stay round-specific.
