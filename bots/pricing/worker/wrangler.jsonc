@@ -5,5 +5,5 @@
  "workers_dev":true,
  "durable_objects":{"bindings":[{"name":"PRICING","class_name":"PricingResident"}]},
  "migrations":[{"tag":"v1","new_sqlite_classes":["PricingResident"]}],
- "triggers":{"crons":["*/5 * * * *"]}
+ "triggers":{"crons":["0 */6 * * *"]}
 }
