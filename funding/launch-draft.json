@@ -1,0 +1,27 @@
+{
+  "status": "draft-needs-owner-terms-and-wallet",
+  "project": "cloud-itonami/cloud-itonami-isic-7320",
+  "botName": "Itonami Market Research Bot",
+  "chainId": 8453,
+  "asset": "USDC",
+  "idleStrategy": "aave-v3",
+  "proposalNotAuthorized": {
+    "fundingCapUSDC": "100",
+    "dailyLimitUSDC": "10",
+    "cashReserveUSDC": "20",
+    "fundingWindowDays": 7,
+    "maturityDaysAfterFundingCloses": 30,
+    "useOfFunds": "Customer-scoped market research: documented data and compute costs paid only to approved recipients."
+  },
+  "requiredOwnerInputs": {
+    "responsibleBorrower": null,
+    "repaymentObligation": null,
+    "approvedRecipientAddresses": [],
+    "controllerWallet": null,
+    "approvalOfProposedAmountsAndDates": false
+  },
+  "registeredTermsVersion": null,
+  "vault": null,
+  "acceptPublication": false,
+  "depositEnabled": false
+}
