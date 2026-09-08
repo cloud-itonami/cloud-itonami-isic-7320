@@ -1,0 +1,5 @@
+observed_at,provider,product,currency,unit,price,source,comparison_limit
+2026-09-08,Exa,Search,USD,1000 requests,7,https://exa.ai/pricing?tab=api,input cost benchmark; not a finished report
+2026-09-08,Exa,Agent medium,USD,request,0.10,https://exa.ai/pricing?tab=api,API run; contact enrichment billed separately
+2026-09-08,Exa,Agent high,USD,request,0.50,https://exa.ai/pricing?tab=api,API run; contact enrichment billed separately
+2026-09-08,Exa,Agent x-high,USD,request,1.00,https://exa.ai/pricing?tab=api,API run; contact enrichment billed separately
