@@ -11,7 +11,8 @@
     "cashReserveUSDC": "20",
     "fundingWindowDays": 7,
     "maturityDaysAfterFundingCloses": 30,
-    "useOfFunds": "Customer-scoped market research: documented data and compute costs paid only to approved recipients."
+    "useOfFunds": "Customer-scoped market research: documented data and compute costs paid only to approved recipients.",
+    "appliesTo": "Legacy principal-spending alternative only; not the approved yield pilot."
   },
   "requiredOwnerInputs": {
     "responsibleBorrower": "Awai network",
@@ -35,9 +36,17 @@
     {
       "policy": "yield-budget-v1",
       "principalSpending": false,
-      "botShareBps": null,
+      "botShareBps": 5000,
       "termsVersion": null,
-      "vault": null
+      "vault": null,
+      "fundingCapUSDC": "10"
     }
-  ]
+  ],
+  "approvedPilot": {
+    "policy": "yield-budget-v1",
+    "fundingCapUSDC": "10",
+    "botShareBps": 5000,
+    "lenderShareBps": 5000,
+    "principalSpending": false
+  }
 }
