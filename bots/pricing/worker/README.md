@@ -9,5 +9,8 @@ quotes, or enable research sales. Public /status exposes no credentials.
 Schedule is temporarily every five minutes for initial deployment verification;
 reduce to six-hourly after the first observed successful scheduled run. Bind
 MURAKUMO_API_KEY as a Worker secret. Incomplete, malformed or incorrect model
-output cannot become a successful receipt. The external handler cannot trigger
-reviews; only scheduled execution invokes the private Durable Object route.
+output cannot become a successful receipt. POST /run requires a separate PRICING_RUN_TOKEN secret; it invokes the same
+review as the scheduler. Concurrent invocations are excluded. Murakumo credentials
+do not authorize the administrative route. First authenticated production run
+completed on 2026-09-08 using qwen3.8-27b-throughput-b70 (132 tokens, approximately
+7 seconds). This is not evidence of research fulfillment or customer sales.
