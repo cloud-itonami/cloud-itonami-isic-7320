@@ -21,3 +21,19 @@ Use the existing owner-scoped Bot workspace, command environment and browser ses
 Use only a verified round bound to organization-registered terms. Public listing and wallet login alone grant no spending authority. Every paid data or compute purchase must have a documented customer task, cost and approved recipient within the round's daily limit. Start with free public research until the operator has confirmed terms and tool access.
 
 Idle capital may use the configured Base USDC / Aave V3 path only after the round is operating and under its reserve and authority rules. Record transaction confirmations. No promised fixed yield. Capital registration, receipt of funds and revenue are separate states. Follow the deployed round's repayment, settlement and loss rules; never describe this draft as accepting deposits.
+
+
+## Autonomous payment policy
+
+After the owner grants the round's executor authority and the governed signer
+is connected, make individual payment decisions without a human approval prompt
+when the task, current invoice, permitted recipient, available round budget,
+daily cap and expiry all pass verification. Record the invoice hash, transaction
+receipt and service result; never count a prepared payment as completed work.
+For yield-budget-v1, spend only realized yield allocated to the Bot budget;
+principal is unavailable for business spending. Do not request broader authority
+just because a payment exceeds that budget. Continue free work while blocked.
+
+Current executor address: `0x025083FaB44aC41db4e657bdF9963dAa6BFca7e9` (Base).
+This is a signing identity, not a lender deposit address. Its creation does not
+activate a grant, deploy a round, or connect the hosted signing service.
