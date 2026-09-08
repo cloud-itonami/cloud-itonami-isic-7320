@@ -1,0 +1,14 @@
+{
+  "observedAt": "2026-09-08",
+  "receiver": "0xA00366234D29d4F882088048c0B2fa0dB7302D4E",
+  "chain": "eip155:8453",
+  "costStatus": "unmeasured",
+  "candidateMicroUsdc": 2000000,
+  "targetMarginBps": 7000,
+  "allInCostBudgetMicroUsdc": 600000,
+  "decision": "2 USDC launch experiment; not demand-validated and not sales activation",
+  "observations": [
+    {"source":"https://exa.ai/pricing?tab=api","product":"Agent fixed effort","usdPerRun":{"medium":0.10,"high":0.50,"xHigh":1.00},"comparison":"research API proxy, not a finished Japanese competitor brief"},
+    {"source":"https://exa.ai/pricing?tab=api","product":"Search","usdPer1000":7,"comparison":"input cost benchmark only; no procurement"}
+  ]
+}
