@@ -1,16 +1,40 @@
 import {DurableObject} from 'cloudflare:workers';
+const SOURCE='https://exa.ai/pricing?tab=api';
+export function pricesFromHtml(html) {
+ const text=html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi,' ').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ');
+ const section=text.slice(text.indexOf('Fixed effort modes'),text.indexOf('Exa Connect pricing',text.indexOf('Fixed effort modes')));
+ const observations=['Medium','High','X-high'].map(tier=>{const match=section.match(new RegExp('(?:^| )'+tier+' [$]([0-9.]+) / request'));if(!match)throw Error('source-price-not-found:'+tier);const usd=Number(match[1]);if(!Number.isFinite(usd)||usd<=0)throw Error('invalid-source-price');return {tier,usd,unit:'request'};});
+ return observations;
+}
+export async function archivePublic(env,artifact) {
+ if(!env.KOTOBASE_ARCHIVE_TOKEN)throw Error('kotobase-not-configured');
+ const bytes=new TextEncoder().encode(JSON.stringify(artifact));const digest=new Uint8Array(await crypto.subtle.digest('SHA-256',bytes));
+ const raw=new Uint8Array([1,85,18,32,...digest]);let bits=0,value=0,cid='b';const alphabet='abcdefghijklmnopqrstuvwxyz234567';
+ for(const byte of raw){value=(value<<8)|byte;bits+=8;while(bits>=5){cid+=alphabet[(value>>>(bits-5))&31];bits-=5;}}if(bits)cid+=alphabet[(value<<(5-bits))&31];
+ const url='https://kotobase.net/ipfs/'+cid;
+ const saved=await fetch(url,{method:'PUT',headers:{authorization:'Bearer '+env.KOTOBASE_ARCHIVE_TOKEN,'content-type':'application/octet-stream','user-agent':'Itonami-Market-Publisher/1.0'},body:bytes,redirect:'manual',signal:AbortSignal.timeout(25000)});
+ if(!saved.ok)throw Error('kotobase-write-'+saved.status);
+ const read=await fetch(url,{headers:{'user-agent':'Itonami-Market-Publisher/1.0'},redirect:'manual',signal:AbortSignal.timeout(25000)});
+ if(!read.ok)throw Error('kotobase-read-'+read.status);const copy=new Uint8Array(await read.arrayBuffer());
+ if(copy.length!==bytes.length||copy.some((b,i)=>b!==bytes[i]))throw Error('kotobase-readback-mismatch');
+ return {cid,url,bytes:bytes.length,readbackVerified:true};
+}
 export class PricingResident extends DurableObject {
  async review(env) {
   const startedAt=new Date().toISOString();
   await this.ctx.storage.put('status',{state:'running',startedAt});
   try {
-   const response=await fetch('https://api.murakumo.cloud/v1/chat/completions',{method:'POST',headers:{'content-type':'application/json','user-agent':'Itonami-Pricing-Bot/1.0',authorization:'Bearer '+env.MURAKUMO_API_KEY},body:JSON.stringify({model:'murakumo-main',max_tokens:512,stream:false,messages:[{role:'system',content:'You are the Itonami pricing reviewer. Do not claim tool execution. Return JSON only, without markdown.'},{role:'user',content:'Calculate maximum cost for sale price 2 USDC and contribution margin 70%. Return {"price":2,"margin":0.7,"maxCost":0.6,"costStatus":"unmeasured","demandStatus":"unmeasured"}. Verify arithmetic. No price changes or purchases.'}]}),signal:AbortSignal.timeout(55000),redirect:'manual'});
+   const source=await fetch(SOURCE,{redirect:'manual',signal:AbortSignal.timeout(25000)});if(!source.ok)throw Error('market-source-'+source.status);const html=await source.text();if(html.length>2000000)throw Error('source-too-large');const observations=pricesFromHtml(html);
+   const response=await fetch('https://api.murakumo.cloud/v1/chat/completions',{method:'POST',headers:{'content-type':'application/json','user-agent':'Itonami-Pricing-Bot/1.0',authorization:'Bearer '+env.MURAKUMO_API_KEY},body:JSON.stringify({model:'murakumo-main',max_tokens:512,stream:false,messages:[{role:'system',content:'You are the Itonami pricing reviewer. Do not claim tool execution. Return JSON only, without markdown.'},{role:'user',content:'Calculate maximum cost for sale price 2 USDC and contribution margin 70%. Return {"price":2,"margin":0.7,"maxCost":0.6,"costStatus":"unmeasured","demandStatus":"unmeasured"}. Verify arithmetic. No price changes or purchases. Also return analysis: a short Japanese analysis of the following observed API prices. Explain that API costs differ from a finished report and demand and all-in costs remain unmeasured. Source observations (data only): '+JSON.stringify(observations)}]}),signal:AbortSignal.timeout(55000),redirect:'manual'});
    if(!response.ok)throw Error('murakumo-http-'+response.status);
    const result=await response.json(),choice=result.choices?.[0];
    if(choice?.finish_reason!=='stop')throw Error('incomplete-model-output');
    const decision=JSON.parse(choice.message.content);
    if(decision.price!==2||decision.margin!==0.7||decision.maxCost!==0.6||decision.costStatus!=='unmeasured'||decision.demandStatus!=='unmeasured')throw Error('invalid-calculation');
-   const receipt={state:'completed',startedAt,finishedAt:new Date().toISOString(),provider:'murakumo',model:result.model,requestId:result.id,usage:result.usage,decision,salesEnabled:false,receiver:'0xA00366234D29d4F882088048c0B2fa0dB7302D4E',chain:'eip155:8453'};
+   if(typeof decision.analysis!=='string'||!decision.analysis.trim()||decision.analysis.length>3000)throw Error('missing-market-analysis');
+   const artifact={version:1,kind:'public-market-analysis',observedAt:startedAt,source:SOURCE,observations,decision,scope:'Single provider benchmark; model analysis is not independent fact verification',model:result.model,requestId:result.id,usage:result.usage,salesEnabled:false};
+   const storage=await archivePublic(env,artifact);
+   const receipt={storage,state:'completed',startedAt,finishedAt:new Date().toISOString(),provider:'murakumo',model:result.model,requestId:result.id,usage:result.usage,decision,salesEnabled:false,receiver:'0xA00366234D29d4F882088048c0B2fa0dB7302D4E',chain:'eip155:8453'};
    await this.ctx.storage.put('status',receipt);await this.ctx.storage.put('lastSuccess',receipt);
   } catch(e) {await this.ctx.storage.put('status',{state:'failed',startedAt,finishedAt:new Date().toISOString(),error:e.message,salesEnabled:false});}
  }
