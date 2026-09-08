@@ -1,0 +1,9 @@
+{
+ "name":"itonami-pricing-resident",
+ "main":"index.mjs",
+ "compatibility_date":"2026-09-08",
+ "workers_dev":true,
+ "durable_objects":{"bindings":[{"name":"PRICING","class_name":"PricingResident"}]},
+ "migrations":[{"tag":"v1","new_sqlite_classes":["PricingResident"]}],
+ "triggers":{"crons":["*/5 * * * *"]}
+}
