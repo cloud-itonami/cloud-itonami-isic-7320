@@ -1,5 +1,5 @@
 (ns polling.sim
-  "Demo driver -- `clojure -M:dev:run`. Walks a clean survey through
+  "Demo driver -- `kbb -M:dev:run`. Walks a clean survey through
   intake -> methodology verification -> unrepresentative-sample-risk
   screening -> findings-report-publication proposal (always
   escalates) -> human approval -> commit, then shows four HARD holds
