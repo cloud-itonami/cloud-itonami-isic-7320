@@ -1,0 +1,35 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:dev:physics` runs it.
+;;
+;; README "Robotics premise": a fieldwork-kiosk robot collects in-person survey
+;; responses where used (ISIC 7320, market research and public opinion
+;; polling). Its physical work: relocating the survey kiosk between intercept
+;; points in a station concourse, and keeping the kiosk's tablet from
+;; overheating during an outdoor intercept session in summer sun.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isic-7320"
+ :cases
+ [{:id :kiosk-between-intercept-points
+   :kind :transport
+   :procedure "survey kiosk robot relocates between intercept points in a station concourse during the sampling shift"
+   :params {:mass-kg 55.0 :payload-kg 5.0 :v-max-mps 0.7 :a-max-mps2 0.3
+            :brake-decel-mps2 1.0 :drive-force-n 120.0 :crr 0.02
+            :cog-height-m 0.70 :payload-cog-height-m 1.10 :support-half-length-m 0.25
+            :max-time-s 3600.0}
+   :sweep {:param :distance-m :values [20.0 50.0 100.0 150.0 250.0]}
+   :quantity :cycle-time-s
+   :limit {:max 180.0 :basis "estimate: relocation must fit the 3-minute gap between sampling intervals in the intercept protocol"}
+   :boundary {:lo 10.0 :hi 500.0}}
+  {:id :kiosk-enclosure-in-sun
+   :kind :thermal
+   :procedure "sun-facing kiosk enclosure panel (foam-cored) at a 70 C sol-air temperature during an outdoor session; inner face beside the tablet, until it passes 45 C"
+   :params {:conductivity-w-mk 0.030 :density-kg-m3 40.0 :specific-heat-j-kgk 1400.0
+            :t0-c 30.0 :t-hot-c 70.0 :h-front-w-m2k 15.0 :t-back-ambient-c 30.0 :h-back-w-m2k 3.0
+            :threshold-c 45.0 :duration-s 21600.0 :nodes 11}
+   :sweep {:param :thickness-m :values [0.005 0.01 0.02 0.03 0.05]}
+   :quantity :final-back-c
+   :limit {:max 45.0 :basis "estimate: 45 C inner-face ceiling for tablet electronics after a 6 h session; sol-air 70 C and the interior air film are estimates"}
+   :boundary {:lo 0.002 :hi 0.08}}]}
