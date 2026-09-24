@@ -8,7 +8,7 @@
     report` NEVER auto-commits at any phase, `:survey/intake` (no
     direct capital risk) MAY auto-commit when clean, and every
     decision (commit OR hold) leaves exactly one ledger fact."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [langgraph.graph :as g]
             [polling.store :as store]
             [polling.operation :as op]))
